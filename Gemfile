@@ -64,7 +64,7 @@ end
 
 gem 'devise'
 gem 'kaminari'
-gem 'bootstrap', '~> 5.0.2'
+gem 'bootstrap', '~> 5.3.3'
 gem 'prawn'
 gem 'csv'
 gem 'carrierwave'
