@@ -3,7 +3,7 @@ class LivrosController < ApplicationController
 
   # GET /livros or /livros.json
   def index
-    @livros = Livro.all
+    @livros = Livro.order("id").page(params[:page]).per(3)
   end
 
   # GET /livros/1 or /livros/1.json

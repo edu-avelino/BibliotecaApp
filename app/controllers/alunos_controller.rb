@@ -3,7 +3,7 @@ class AlunosController < ApplicationController
 
   # GET /alunos or /alunos.json
   def index
-    @alunos = Aluno.all
+    @alunos = Aluno.order("id").page(params[:page]).per(4)
   end
 
   # GET /alunos/1 or /alunos/1.json
@@ -65,6 +65,6 @@ class AlunosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def aluno_params
-      params.expect(aluno: [ :nome, :Data_Nasc, :email ])
+      params.expect(aluno: [ :nome, :data_nasc, :email ])
     end
 end

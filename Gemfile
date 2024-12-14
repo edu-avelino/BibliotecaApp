@@ -69,3 +69,4 @@ gem 'prawn'
 gem 'csv'
 gem 'carrierwave'
 gem "sassc-rails"
+gem 'bootstrap5-kaminari-views'
