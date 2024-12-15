@@ -3,7 +3,7 @@ class EmprestimosController < ApplicationController
 
   # GET /emprestimos or /emprestimos.json
   def index
-    @emprestimos = Emprestimo.all
+    @emprestimos = Emprestimo.order("id_aluno").page(params[:page]).per(4)
   end
 
   # GET /emprestimos/1 or /emprestimos/1.json
@@ -60,11 +60,11 @@ class EmprestimosController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_emprestimo
-      @emprestimo = Emprestimo.find(params.expect(:id))
+      @emprestimo = Emprestimo.find(params.expect(:id).split('_'))
     end
 
     # Only allow a list of trusted parameters through.
     def emprestimo_params
-      params.fetch(:emprestimo, {})
+      params.expect(emprestimo: [:id_aluno, :id_livro, :data_empr, :data_devo, :status])
     end
 end

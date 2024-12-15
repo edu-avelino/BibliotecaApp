@@ -4,6 +4,7 @@ class HomeController < ApplicationController
   def index
     @alunos = Aluno.all
     @livros = Livro.all
+    @emprestimos = Emprestimo.all
   end
 
   def export_csv
