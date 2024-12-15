@@ -6,8 +6,9 @@
 
   <p>
     <strong>Data nasc:</strong>
-    <%= aluno.data_nasc.strftime("%d/%m/%Y") %>
+    <%= aluno.data_nasc.present? ? aluno.data_nasc.strftime("%d/%m/%Y") : "Data não informada" %>
   </p>
+
 
   <p>
     <strong>Email:</strong>

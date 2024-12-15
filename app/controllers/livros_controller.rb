@@ -6,6 +6,32 @@ class LivrosController < ApplicationController
     @livros = Livro.order("id").page(params[:page]).per(3)
   end
 
+  def baixar_pdf
+    @livro = Livro.find(params[:id])
+    pdf = Prawn::Document.new
+    #pdf.text "Código de livro: #{@livro.id}"
+    pdf.text "Título: #{@livro.titulo}", size: 20
+    pdf.text "Autor: #{@livro.autor}", size: 20
+    pdf.text "Ano de publicação: #{@livro.ano_publ}", size: 20
+    send_data(pdf.render,
+    filename: "livro#{@livro.titulo}.pdf",
+    type: 'application/pdf')
+  end
+
+  def preview
+    @livro = Livro.find(params[:id])
+    pdf = Prawn::Document.new
+    pdf.text 'Isso é uma preview', size: 40
+    #pdf.text "Código de livro: #{@livro.id}"
+    pdf.text "Título: #{@livro.titulo}", size: 20
+    pdf.text "Autor: #{@livro.autor}", size: 20
+    pdf.text "Ano de publicação: #{@livro.ano_publ}", size: 20
+    send_data(pdf.render,
+    filename: "livro#{@livro.titulo}.pdf",
+    type: 'application/pdf',
+    disposition: 'inline')
+  end
+
   # GET /livros/1 or /livros/1.json
   def show
   end
@@ -57,6 +83,16 @@ class LivrosController < ApplicationController
     end
   end
 
+  def pdf
+    pdf = Prawn::Document.new
+    pdf.text @livro.titulo, size: 20, style: :bold
+
+    send_data(pdf.render,
+    filename: "#{@livro.titulo}.pdf",
+    type: 'application/pdf',
+    disposition: 'inline')
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_livro
@@ -65,6 +101,6 @@ class LivrosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def livro_params
-      params.expect(livro: [ :titulo, :autor, :ano_publ, :quantidade ])
+      params.expect(livro: [ :titulo, :autor, :ano_publ, :quantidade, :capa ])
     end
 end

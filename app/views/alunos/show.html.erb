@@ -3,8 +3,10 @@
 <%= render @aluno %>
 
 <div>
-  <%= link_to "Edit this aluno", edit_aluno_path(@aluno) %> |
-  <%= link_to "Back to alunos", alunos_path %>
+  <%= link_to "Editar esse aluno", edit_aluno_path(@aluno) %> |
+  <%= link_to "Voltar aos alunos", alunos_path %>
 
-  <%= button_to "Destroy this aluno", @aluno, method: :delete %>
+  <%= button_to "Apagar esse aluno", @aluno, method: :delete %>
+  <%= link_to "Baixar PDF", downloadAluno_path(id: @aluno.id) %>
+  <%= link_to "Preview", previewAluno_path(id: @aluno.id) %>
 </div>
