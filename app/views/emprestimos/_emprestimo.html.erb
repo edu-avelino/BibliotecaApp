@@ -1,12 +1,12 @@
 <div id="<%= dom_id emprestimo %>">
 <p>
-    <strong>ID do aluno:</strong>
-    <%= emprestimo.id_aluno %>
+    <strong>Nome do aluno:</strong>
+    <%= @alunos[emprestimo.id_aluno]&.nome || "Aluno não encontrado" %>
   </p>
 
   <p>
-    <strong>ID do livro:</strong>
-    <%= emprestimo.id_livro %>
+    <strong>Nome do livro:</strong>
+    <%= @livros[emprestimo.id_livro]&.titulo || "Livro não encontrado" %>
   </p>
 
   <p>

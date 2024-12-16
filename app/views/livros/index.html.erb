@@ -2,6 +2,8 @@
 
 <%= paginate @livros, theme: 'bootstrap-5' %>
 
+<%= render "import" %>
+
 <% content_for :title, "Livros" %>
 
 <h1>Livros</h1>
@@ -10,9 +12,9 @@
   <% @livros.each do |livro| %>
     <%= render livro %>
     <p>
-      <%= link_to "Show this livro", livro %>
+      <%= link_to "Mostrar esse livro", livro %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New livro", new_livro_path %>
+<%= link_to "Novo livro", new_livro_path %>

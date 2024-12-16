@@ -3,11 +3,16 @@ class EmprestimosController < ApplicationController
 
   # GET /emprestimos or /emprestimos.json
   def index
-    @emprestimos = Emprestimo.order("id_aluno").page(params[:page]).per(4)
+    @emprestimos = Emprestimo.order("id_aluno").page(params[:page]).per(3)
+    @alunos = Aluno.all.index_by(&:id)
+    @livros = Livro.all.index_by(&:id)
   end
 
   # GET /emprestimos/1 or /emprestimos/1.json
   def show
+    @emprestimo = Emprestimo.find(params.expect(:id).split('_'))
+    @alunos = Aluno.all.index_by(&:id)
+    @livros = Livro.all.index_by(&:id)
   end
 
   # GET /emprestimos/new
@@ -22,14 +27,16 @@ class EmprestimosController < ApplicationController
   # POST /emprestimos or /emprestimos.json
   def create
     @emprestimo = Emprestimo.new(emprestimo_params)
+    if @emprestimo.valid?
 
-    respond_to do |format|
-      if @emprestimo.save
-        format.html { redirect_to @emprestimo, notice: "Emprestimo was successfully created." }
-        format.json { render :show, status: :created, location: @emprestimo }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @emprestimo.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @emprestimo.save
+          format.html { redirect_to @emprestimo, notice: "Emprestimo foi criado com sucesso." }
+          format.json { render :show, status: :created, location: @emprestimo }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @emprestimo.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -38,7 +45,7 @@ class EmprestimosController < ApplicationController
   def update
     respond_to do |format|
       if @emprestimo.update(emprestimo_params)
-        format.html { redirect_to @emprestimo, notice: "Emprestimo was successfully updated." }
+        format.html { redirect_to @emprestimo, notice: "Emprestimo foi atualizado com sucesso." }
         format.json { render :show, status: :ok, location: @emprestimo }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +59,7 @@ class EmprestimosController < ApplicationController
     @emprestimo.destroy!
 
     respond_to do |format|
-      format.html { redirect_to emprestimos_path, status: :see_other, notice: "Emprestimo was successfully destroyed." }
+      format.html { redirect_to emprestimos_path, status: :see_other, notice: "Emprestimo foi apagado com sucesso." }
       format.json { head :no_content }
     end
   end

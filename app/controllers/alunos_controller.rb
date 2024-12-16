@@ -32,6 +32,15 @@ class AlunosController < ApplicationController
     disposition: 'inline')
   end
 
+  def import
+    return redirect_to request.referer, notice: 'Nenhum arquivo adicionado' if params[:file].nil?
+    return redirect_to request.referer, notice: 'Somente arquivos CSV são permitidos' unless params[:file].content_type == 'text/csv'
+
+    CsvImportServiceAluno.new.call(params[:file])
+
+    redirect_to request.referer, notice: 'Importação concluída!'
+  end
+
   # GET /alunos/1 or /alunos/1.json
   def show
     @aluno = Aluno.find(params[:id])
@@ -52,7 +61,7 @@ class AlunosController < ApplicationController
 
     respond_to do |format|
       if @aluno.save
-        format.html { redirect_to @aluno, notice: "Aluno was successfully created." }
+        format.html { redirect_to @aluno, notice: "Aluno foi adicionado com sucesso." }
         format.json { render :show, status: :created, location: @aluno }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -65,7 +74,7 @@ class AlunosController < ApplicationController
   def update
     respond_to do |format|
       if @aluno.update(aluno_params)
-        format.html { redirect_to @aluno, notice: "Aluno was successfully updated." }
+        format.html { redirect_to @aluno, notice: "Aluno foi editado com sucesso." }
         format.json { render :show, status: :ok, location: @aluno }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -79,7 +88,7 @@ class AlunosController < ApplicationController
     @aluno.destroy!
 
     respond_to do |format|
-      format.html { redirect_to alunos_path, status: :see_other, notice: "Aluno was successfully destroyed." }
+      format.html { redirect_to alunos_path, status: :see_other, notice: "Aluno foi apagado com sucesso" }
       format.json { head :no_content }
     end
   end

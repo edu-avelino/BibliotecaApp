@@ -3,10 +3,10 @@
 <%= render @livro %>
 
 <div>
-  <%= link_to "Edit this livro", edit_livro_path(@livro) %> |
-  <%= link_to "Back to livros", livros_path %>
+  <%= link_to "Editar esse livro", edit_livro_path(@livro) %> |
+  <%= link_to "Voltar aos livros", livros_path %>
 
-  <%= button_to "Destroy this livro", @livro, method: :delete %>
+  <%= button_to "Apagar esse livro", @livro, method: :delete %>
   <%= link_to "Baixar PDF", downloadLivro_path(id: @livro.id) %>
   <%= link_to "Preview", previewLivro_path(id: @livro.id) %>
 </div>

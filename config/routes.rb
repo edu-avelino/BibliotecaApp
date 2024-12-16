@@ -1,7 +1,15 @@
 Rails.application.routes.draw do
   resources :emprestimos
-  resources :livros
-  resources :alunos
+  resources :livros do
+    collection do
+      post :import
+    end
+  end
+  resources :alunos do
+    collection do
+      post :import
+    end
+  end
   root to: "home#index"
   get "export_csv", to: "home#export_csv", format: :csv
   get "export_csv_livros", to: "home#export_csv_livros", format: :csv

@@ -13,6 +13,7 @@ class LivrosController < ApplicationController
     pdf.text "Título: #{@livro.titulo}", size: 20
     pdf.text "Autor: #{@livro.autor}", size: 20
     pdf.text "Ano de publicação: #{@livro.ano_publ}", size: 20
+    pdf.text "Quantidade: #{@livro.quantidade}", size: 20
     send_data(pdf.render,
     filename: "livro#{@livro.titulo}.pdf",
     type: 'application/pdf')
@@ -26,10 +27,20 @@ class LivrosController < ApplicationController
     pdf.text "Título: #{@livro.titulo}", size: 20
     pdf.text "Autor: #{@livro.autor}", size: 20
     pdf.text "Ano de publicação: #{@livro.ano_publ}", size: 20
+    pdf.text "Quantidade: #{@livro.quantidade}", size: 20
     send_data(pdf.render,
     filename: "livro#{@livro.titulo}.pdf",
     type: 'application/pdf',
     disposition: 'inline')
+  end
+
+  def import
+    return redirect_to request.referer, notice: 'Nenhum arquivo adicionado' if params[:file].nil?
+    return redirect_to request.referer, notice: 'Somente arquivos CSV são permitidos' unless params[:file].content_type == 'text/csv'
+
+    CsvImportServiceLivro.new.call(params[:file])
+
+    redirect_to request.referer, notice: 'Importação concluída!'
   end
 
   # GET /livros/1 or /livros/1.json
@@ -51,7 +62,7 @@ class LivrosController < ApplicationController
 
     respond_to do |format|
       if @livro.save
-        format.html { redirect_to @livro, notice: "Livro was successfully created." }
+        format.html { redirect_to @livro, notice: "Livro foi criado com sucesso." }
         format.json { render :show, status: :created, location: @livro }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -64,7 +75,7 @@ class LivrosController < ApplicationController
   def update
     respond_to do |format|
       if @livro.update(livro_params)
-        format.html { redirect_to @livro, notice: "Livro was successfully updated." }
+        format.html { redirect_to @livro, notice: "Livro foi atualizado com sucesso." }
         format.json { render :show, status: :ok, location: @livro }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -78,7 +89,7 @@ class LivrosController < ApplicationController
     @livro.destroy!
 
     respond_to do |format|
-      format.html { redirect_to livros_path, status: :see_other, notice: "Livro was successfully destroyed." }
+      format.html { redirect_to livros_path, status: :see_other, notice: "Livro foi apagado com sucesso." }
       format.json { head :no_content }
     end
   end

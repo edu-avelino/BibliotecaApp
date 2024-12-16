@@ -13,17 +13,17 @@
 
   <div>
     <%= form.label :id_aluno, "ID de aluno", style: "display: block" %>
-    <%= form.text_field :id_aluno %>
+    <%= form.text_field :id_aluno, required: true%>
   </div>
 
   <div>
     <%= form.label :id_livro, "ID de livro", style: "display: block" %>
-    <%= form.text_field :id_livro %>
+    <%= form.text_field :id_livro, required: true %>
   </div>
 
   <div>
     <%= form.label :data_empr, "Data do empréstimo", style: "display: block" %>
-    <%= form.date_field :data_empr %>
+    <%= form.date_field :data_empr, required: true %>
   </div>
 
   <div>
@@ -34,7 +34,7 @@
   <div>
     <%= form.label :status, "Status - Já foi devolvido?", class:"form-check-label" %>
     <%= form.hidden_field :status, value: false %>
-    <%= form.check_box :status, {class:"form-check-input", type:"checkbox"}, true, false %>
+    <%= form.check_box :status, {class:"form-check-input", type:"checkbox"}, true %>
   </div>
 
   <div>
