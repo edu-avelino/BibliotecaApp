@@ -3,7 +3,7 @@ class AlunosController < ApplicationController
 
   # GET /alunos or /alunos.json
   def index
-    @alunos = Aluno.order("id").page(params[:page]).per(4)
+    @alunos = Aluno.order("id").page(params[:page]).per(3)
   end
 
   def baixar_pdf

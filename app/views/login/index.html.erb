@@ -1,0 +1,23 @@
+    <% if usuario_signed_in? %>
+        <h3>Usuário</h3>
+        <%= link_to "Deslogar", destroy_usuario_session_path, method: :delete, data: { turbo_method: :delete }, class: "btn btn-default btn-sm" %>
+        <%= link_to "Editar login", edit_usuario_registration_path %>
+        <h3>Página inicial</h3>
+        <%= link_to "Página inicial", usuario_path %>
+    <% elsif !admin_signed_in? %>
+        <h3>Usuário</h3>
+        <%= link_to "Registrar", new_usuario_registration_path %>
+        <%= link_to "Logar", new_usuario_session_path %>
+    <% end %>
+
+    <% if admin_signed_in? %>
+        <h3>Admin</h3>
+        <%= link_to "Deslogar", destroy_admin_session_path, method: :delete, data: { turbo_method: :delete } %>
+        <%= link_to "Editar login", edit_admin_registration_path %>
+        <h3>Página inicial</h3>
+        <%= link_to "Página inicial", admin_path %>
+        <% elsif !usuario_signed_in? %>
+        <h3>Admin</h3>
+        <%= link_to "Registrar", new_admin_registration_path %>
+        <%= link_to "Logar", new_admin_session_path %>
+    <% end %>
