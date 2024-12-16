@@ -8,6 +8,36 @@ class EmprestimosController < ApplicationController
     @livros = Livro.all.index_by(&:id)
   end
 
+  def baixar_pdf
+    @emprestimo = Emprestimo.find(params.expect(:format).split('_'))
+    @alunos = Aluno.all.index_by(&:id)
+    @livros = Livro.all.index_by(&:id)
+    pdf = Prawn::Document.new
+    pdf.text "Nome do aluno: #{@alunos[@emprestimo.id_aluno]&.nome}", size: 20
+      pdf.text "Nome do livro: #{@livros[@emprestimo.id_livro]&.titulo}", size: 20
+    pdf.text "Data do empréstimo: #{@emprestimo.data_empr}", size: 20
+    pdf.text "Status - Devolveu?: #{@emprestimo.status}", size: 20
+    send_data(pdf.render,
+    filename: "emprestimo_#{@emprestimo.id_aluno}_#{@emprestimo.data_empr}.pdf",
+    type: 'application/pdf')
+  end
+
+  def preview
+    @emprestimo = Emprestimo.find(params.expect(:format).split('_'))
+    @alunos = Aluno.all.index_by(&:id)
+    @livros = Livro.all.index_by(&:id)
+    pdf = Prawn::Document.new
+    pdf.text 'Isso é uma preview', size: 40
+    pdf.text "Nome do aluno: #{@alunos[@emprestimo.id_aluno]&.nome}", size: 20
+    pdf.text "Nome do livro: #{@livros[@emprestimo.id_livro]&.titulo}", size: 20
+    pdf.text "Data do empréstimo: #{@emprestimo.data_empr}", size: 20
+    pdf.text "Status - Devolveu?: #{@emprestimo.status}", size: 20
+    send_data(pdf.render,
+    filename: "emprestimo_#{@emprestimo.id_aluno}_#{@emprestimo.data_empr}.pdf",
+    type: 'application/pdf',
+    disposition: 'inline')
+  end
+
   # GET /emprestimos/1 or /emprestimos/1.json
   def show
     @emprestimo = Emprestimo.find(params.expect(:id).split('_'))

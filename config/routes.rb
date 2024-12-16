@@ -32,6 +32,8 @@ Rails.application.routes.draw do
   get "previewAluno", to: 'alunos#preview'
   get "downloadLivro", to: 'livros#baixar_pdf'
   get "previewLivro", to: 'livros#preview'
+  get "downloadEmprestimo", to: 'emprestimos#baixar_pdf'
+  get "previewEmprestimo", to: 'emprestimos#preview'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

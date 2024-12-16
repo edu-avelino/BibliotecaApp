@@ -7,4 +7,6 @@
   <%= link_to "Back to emprestimos", emprestimos_path %>
 
   <%= button_to "Destroy this emprestimo", @emprestimo, method: :delete %>
+  <%= link_to "Baixar PDF", downloadEmprestimo_path(@emprestimo) %>
+  <%= link_to "Preview", previewEmprestimo_path(@emprestimo) %>
 </div>
