@@ -1,4 +1,5 @@
 source "https://rubygems.org"
+ruby "3.3.6"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.0", ">= 8.0.1"
@@ -64,9 +65,10 @@ end
 
 gem 'devise'
 gem 'kaminari'
-gem 'bootstrap', '~> 5.3.3'
+#gem 'bootstrap', '~> 5.3.3'
 gem 'prawn'
 gem 'csv'
 gem 'carrierwave'
 gem "sassc-rails"
 gem 'bootstrap5-kaminari-views'
+gem 'bootstrap-sass', '3.4.1'
